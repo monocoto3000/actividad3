@@ -1,9 +1,9 @@
 import * as React from 'react';
-import LabTabs from './Components/LabTabs';
+import CrearProducto from './Components/CrearProducto.jsx';
 function App() {
   return (
     <>
-    <LabTabs></LabTabs>
+    <CrearProducto/>
     </>
   );
 }

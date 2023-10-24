@@ -36,7 +36,9 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
+
 export default function ProdcutoCards(props) {
+    let auxArray = props.array
     console.log(props.array)
     const ImageURL = useRef("")
     const Titulo = useRef("")
@@ -50,15 +52,16 @@ export default function ProdcutoCards(props) {
         props.aux.precio = Precio.current.value;
     };
 
-    // const eliminarPorducto = () => {
-    //     const elementoAEliminar = props.aux; 
-    //     const nuevoArreglo = props.array.filter(item => item !== elementoAEliminar);
-    //     props.array = [...nuevoArreglo]
-    // }
+    const eliminarPorducto = () => {
+        const elementoAEliminar = props.aux; 
+        const nuevoArreglo = props.array.filter(item => item !== elementoAEliminar);
+        auxArray = [...nuevoArreglo]
+        console.log(auxArray)
+    }
 
     return (
         <>
-            <Card sx={{ width: 250, margin: 3 }}>
+            <Card sx={{ minWidth: 250, margin: 3 }}>
                 <CardMedia
                     component="img"
                     alt="green iguana"
@@ -74,7 +77,7 @@ export default function ProdcutoCards(props) {
                 </CardContent>
                 <CardActions>
                     <Button size="small" color='secondary' onClick={handleOpen}>Editar</Button>
-                    <Button size="small" color='secondary'>Eliminar</Button>
+                    <Button size="small" color='secondary' onClick={eliminarPorducto}>Eliminar</Button>
                     <Button size="small">
                         <StyledBadge badgeContent={"+"} color="secondary">
                             <ShoppingCartIcon color='secondary' />
@@ -98,6 +101,7 @@ export default function ProdcutoCards(props) {
                         <InputLabel htmlFor="outlined-adornment-amount" color='secondary'>URL Imagen</InputLabel>
                         <OutlinedInput
                             inputRef={ImageURL}
+                            defaultValue={props.aux.img}
                             startAdornment={<InputAdornment position="start">🔗</InputAdornment>}
                             label="URL Imagen"
                             color='secondary'
@@ -107,6 +111,7 @@ export default function ProdcutoCards(props) {
                         <InputLabel htmlFor="outlined-adornment-amount" color='secondary'>Titulo</InputLabel>
                         <OutlinedInput
                             inputRef={Titulo}
+                            defaultValue={props.aux.titulo}
                             startAdornment={<InputAdornment position="start">✏️</InputAdornment>}
                             label="Titulo"
                             color='secondary'
@@ -117,6 +122,7 @@ export default function ProdcutoCards(props) {
                         <OutlinedInput
                             inputRef={Precio}
                             color='secondary'
+                            defaultValue={props.aux.precio}
                             startAdornment={<InputAdornment position="start">💲</InputAdornment>}
                             label="Precio"
                         />

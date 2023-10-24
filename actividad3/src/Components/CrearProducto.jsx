@@ -37,14 +37,15 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-const carrito = []
 export default function CrearProducto() {
     const [productos, setProductos] = useState([]);
+    const [carrito, setCarrito] = useState([]);
+    const [open, setOpen] = React.useState(false);
     console.log(productos)
     const ImageURL = useRef('')
     const Titulo = useRef('')
     const Precio = useRef('')
-    const [open, setOpen] = React.useState(false);
+    
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setOpen(false)
@@ -80,21 +81,22 @@ export default function CrearProducto() {
             }
         }
     };
+
     const eliminarProducto = (id) => {
-        const indice = productos.findIndex((producto) => producto.id === id);
-        if (indice !== -1) {
-            productos.splice(indice, 1);
-            setProductos([...productos]);
-        }
-        if (productoAEditar && productoAEditar.id === id) {
-            setOpenEditForm(false);
-            setProductoAEditar(null);
-        }
+        const nuevoProducto = productos.filter((producto) => producto.id !== id);
+        setProductos(nuevoProducto);
     }
+
     const agregarCarrito = (id) => {
         carrito.push(productos[id])
         console.log(carrito.length)
         setcantCarrito(carrito.length)
+    }
+
+    const eliminarProductoCarrito = (id) => {
+        const nuevoCarrito = carrito.filter((producto) => producto.id !== id);
+        setCarrito(nuevoCarrito);
+        setcantCarrito(carrito.length - 1);
     }
 
     return (
@@ -260,7 +262,7 @@ export default function CrearProducto() {
                     {carrito.map(compras =>
                         <>
                             <Typography variant='subtitle2'>
-                                🛍️ ID del producto |  <Typography variant='overline'>{compras.id}</Typography><Button style={{ float: "right" }} color='secondary'>Eliminar</Button>
+                                🛍️ ID del producto |  <Typography variant='overline'>{compras.id}</Typography><Button style={{ float: "right" }} color='secondary' onClick={() => eliminarProductoCarrito(compras.id)}>Eliminar</Button>
                             </Typography>
                             <Typography variant='subtitle2'>
                                 Nombre del producto |  <Typography variant='overline'>{compras.titulo}</Typography>
